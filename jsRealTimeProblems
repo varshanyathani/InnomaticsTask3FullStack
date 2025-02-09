@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Problem Solving</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }
+        h2, h3 { text-align: center; }
+        .container { width: 80%; margin: auto; }
+        .problem { background: white; padding: 20px; margin-bottom: 20px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .input-group { margin: 10px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, button { padding: 8px; width: 100%; }
+        button { background: #ff4500; color: white; border: none; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #cc3700; }
+        p.result { font-weight: bold; margin-top: 10px; color: #333; }
+    </style>
+</head>
+<body>
+
+    <h2>JavaScript Problem Solving</h2>
+    <div class="container">
+
+        <!-- 1. ATM Withdrawal -->
+        <div class="problem">
+            <h3>1. ATM Withdrawal</h3>
+            <input type="number" id="atmBalance" placeholder="Enter Balance">
+            <input type="number" id="atmAmount" placeholder="Enter Amount">
+            <input type="number" id="atmPin" placeholder="Set PIN">
+            <input type="number" id="atmEnteredPin" placeholder="Enter PIN">
+            <button onclick="atmWithdrawal()">Withdraw</button>
+            <p class="result" id="atmResult"></p>
+        </div>
+
+        <!-- 2. Online Shopping Discount -->
+        <div class="problem">
+            <h3>2. Online Shopping Discount</h3>
+            <input type="number" id="shopAmount" placeholder="Enter Order Amount">
+            <button onclick="calculateDiscount()">Calculate</button>
+            <p class="result" id="shopResult"></p>
+        </div>
+
+        <!-- 3. Student Grading -->
+        <div class="problem">
+            <h3>3. Student Grading</h3>
+            <input type="number" id="studentMarks" placeholder="Enter Marks">
+            <input type="number" id="attendance" placeholder="Attendance %">
+            <button onclick="calculateGrade()">Get Grade</button>
+            <p class="result" id="gradeResult"></p>
+        </div>
+
+        <!-- 4. Smart Traffic Light -->
+        <div class="problem">
+            <h3>4. Smart Traffic Light</h3>
+            <select id="trafficDensity">
+                <option value="Heavy Traffic">Heavy Traffic</option>
+                <option value="Moderate Traffic">Moderate Traffic</option>
+                <option value="Light Traffic">Light Traffic</option>
+            </select>
+            <button onclick="trafficControl()">Check Signal Time</button>
+            <p class="result" id="trafficResult"></p>
+        </div>
+
+        <!-- 5. Movie Ticket Pricing -->
+        <div class="problem">
+            <h3>5. Movie Ticket Pricing</h3>
+            <input type="number" id="ticketAge" placeholder="Enter Age">
+            <input type="number" id="showTime" placeholder="Show Time (24h format)">
+            <button onclick="calculateTicketPrice()">Calculate Price</button>
+            <p class="result" id="ticketResult"></p>
+        </div>
+
+        <!-- 6. Job Application Eligibility -->
+        <div class="problem">
+            <h3>6. Job Application Eligibility</h3>
+            <input type="number" id="jobAge" placeholder="Enter Age">
+            <input type="number" id="experience" placeholder="Years of Experience">
+            <select id="qualification">
+                <option value="Bachelor's Degree">Bachelor's Degree</option>
+                <option value="Diploma">Diploma</option>
+            </select>
+            <button onclick="checkJobEligibility()">Check Eligibility</button>
+            <p class="result" id="jobResult"></p>
+        </div>
+
+        <!-- 7. E-commerce Coupon Redemption -->
+        <div class="problem">
+            <h3>7. E-commerce Coupon Redemption</h3>
+            <input type="number" id="orderAmount" placeholder="Enter Order Amount">
+            <select id="couponCode">
+                <option value="None">None</option>
+                <option value="DISCOUNT10">DISCOUNT10</option>
+                <option value="FREESHIP">FREESHIP</option>
+            </select>
+            <button onclick="applyCoupon()">Apply Coupon</button>
+            <p class="result" id="couponResult"></p>
+        </div>
+        <!--8.Gym membership plan-->
+        <div class="problem">
+        <h3>8.Gym Membership Plan</h3>
+    <select id="planType">
+        <option value="Basic">Basic</option>
+        <option value="Premium">Premium</option>
+        <option value="VIP">VIP</option>
+    </select>
+    <label><input type="checkbox" id="wantsTrainer"> Personal Trainer</label>
+    <label><input type="checkbox" id="wantsDietPlan"> Diet Plan</label>
+    <button onclick="choosePlan()">Get Recommendation</button>
+    <p id="planResult"></p>
+    </div>
+
+        <!-- 9. Electricity Bill Calculation -->
+        <div class="problem">
+            <h3>9. Electricity Bill Calculation</h3>
+            <input type="number" id="units" placeholder="Enter Units">
+            <input type="number" id="timeOfDay" placeholder="Hour of the Day (0-23)">
+            <button onclick="calculateElectricityBill()">Calculate Bill</button>
+            <p class="result" id="billResult"></p>
+        </div>
+
+        <!-- 10. Flight Ticket Booking -->
+        <div class="problem">
+            <h3>10. Flight Ticket Booking</h3>
+            <input type="number" id="luggageWeight" placeholder="Luggage Weight (kg)">
+            <select id="classType">
+                <option value="Economy">Economy</option>
+                <option value="Business">Business</option>
+                <option value="First">First</option>
+            </select>
+            <input type="checkbox" id="isStudent"> Student
+            <input type="checkbox" id="isSenior"> Senior Citizen
+            <button onclick="calculateFlightFare()">Calculate Fare</button>
+            <p class="result" id="flightResult"></p>
+        </div>
+
+    </div>
+
+    <script>
+        function atmWithdrawal() {
+            let balance = parseFloat(document.getElementById("atmBalance").value);
+            let amount = parseFloat(document.getElementById("atmAmount").value);
+            let pin = document.getElementById("atmPin").value;
+            let enteredPin = document.getElementById("atmEnteredPin").value;
+            let message = enteredPin !== pin ? "Incorrect PIN" :
+                amount > balance ? "Insufficient Funds" :
+                amount % 100 !== 0 ? "Enter amount in multiples of 100" :
+                Withdrawal successful. New balance: $${balance - amount};
+            document.getElementById("atmResult").innerText = message;
+        }
+         function choosePlan() {
+            let planType = document.getElementById("planType").value;
+            let wantsTrainer = document.getElementById("wantsTrainer").checked;
+            let wantsDietPlan = document.getElementById("wantsDietPlan").checked;
+
+            let recommendation = planType === "Basic" && wantsTrainer ? "Upgrade to Premium" :
+                                planType !== "VIP" && wantsDietPlan ? "Upgrade to VIP" :
+                                Recommended Plan: ${planType};
+            document.getElementById("planResult").innerText = recommendation;
+        }
+
+        function calculateElectricityBill() {
+            let units = parseFloat(document.getElementById("units").value);
+            let timeOfDay = parseFloat(document.getElementById("timeOfDay").value);
+            let rate = units <= 100 ? 5 : units <= 300 ? 4 : 3;
+            if (timeOfDay >= 20 || timeOfDay < 8) rate *= 1.1;
+            let total = rate * units;
+            document.getElementById("billResult").innerText = Total bill: $${total.toFixed(2)};
+        }
+
+        function calculateFlightFare() {
+            let classType = document.getElementById("classType").value;
+            let luggageWeight = parseFloat(document.getElementById("luggageWeight").value);
+            let baseFare = 300 + (classType === "Business" ? 200 : classType === "First" ? 500 : 0);
+            if (luggageWeight > 20) baseFare += Math.ceil((luggageWeight - 20) / 10) * 50;
+            document.getElementById("flightResult").innerText = Final ticket price: $${baseFare.toFixed(2)};
+        }
+    </script>
+
+</body>
+</html>
